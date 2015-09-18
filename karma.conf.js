@@ -15,13 +15,16 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      {pattern: 'js/**/*.js', included: false}
+      {pattern: 'js/vendors/**/*.js', included: false},
+      {pattern: 'js/app/**/*.js', included: false},
+      {pattern: 'js/tests/**/*Spec.js', included: false},
+      'js/tests/tests-main.js',
     ],
 
 
     // list of files to exclude
     exclude: [
-      'js/app.js'
+      'js/vendors/jasmine-core/**/*.js'
     ],
 
 
@@ -56,7 +59,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
 
     // Continuous Integration mode
