@@ -1,28 +1,20 @@
 define(['jquery', 'Playlist'], function($, Playlist){
 
-  var PlaylistView = function(config){
-    // since we're doing work with the DOM,
-    //   we want to abstract out those pieces to make it testable
-    // we can do this with a config
-    this.config = config || {};
-    this.$addSongForm = this.config.addSongForm || $('#addSongForm');
-    this.$song = this.config.song || $('#song');
-    this.$currentPlaylist = this.config.currentPlaylist || $('#currentPlaylist');
-
+  var PlaylistView = function(){
     // initialize
     this.playlist = new Playlist();
-    this.addSong = $.proxy(this.addSong, this);
     this.listenAddSong();
-    this.updatePlaylist();
 
+    this.updatePlaylist();
   };
   PlaylistView.prototype.listenAddSong = function(){
-    this.$addSongForm.on('submit', this.addSong);
+    var that = this;
+    $('#addSongForm').on('submit', $.proxy(this.addSongListener, this));
   };
-  PlaylistView.prototype.addSong = function(event){
-    this.playlist.addSong(this.$song.val());
+  PlaylistView.prototype.addSongListener = function(event){
+    this.playlist.addSong($('#song').val());
     this.updatePlaylist();
-    this.$song.val('');
+    $('#song').val('');
     return false;
   };
 
@@ -31,13 +23,14 @@ define(['jquery', 'Playlist'], function($, Playlist){
     this.updatePlaylistDom();
   };
   PlaylistView.prototype.updatePlaylistDom = function(){
+    var that = this;
     var playlistDom = this.playlist.playlist.map($.proxy(this.createPlaylistDomMap, this));
 
-    this.$currentPlaylist.html(playlistDom);
+    $('#currentPlaylist').html(playlistDom);
+
   };
 
   PlaylistView.prototype.createPlaylistDomMap = function(song, index){
-    var that = this;
     var removeButton = document.createElement("button");
     removeButton.appendChild(document.createTextNode("remove"));
     $(removeButton).click(function(){
