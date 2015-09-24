@@ -29,7 +29,7 @@ define(['Playlist', 'Song'], function(Playlist, Song){
     describe('addSong', function(){
       it('should add a song to the playlist', function(){
         playlist.addSong('myTitle');
-        expect(playlist.playlist[0].title).toBe('myTitle');
+        expect(playlist.playlist[0].title).toBe('MyTitle');
       });
     });
     describe('removeSong', function(){

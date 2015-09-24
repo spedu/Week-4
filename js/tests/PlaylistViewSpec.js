@@ -8,6 +8,7 @@ define(['jquery', 'PlaylistView', 'Song'], function($, PlaylistView, Song){
       song: $('<input />'),
       currentPlaylist: $('<ul></ul>')
     });
+
   });
 
   describe('PlaylistView', function(){
@@ -29,10 +30,11 @@ define(['jquery', 'PlaylistView', 'Song'], function($, PlaylistView, Song){
         expect(playlistView.$currentPlaylist.children()[0].localName).toBe('li');
       });
       it('should create an li with the text of the input', function(){
-        var name = "asdf";
+        var name = "asdf",
+            expected = "Asdf";
         playlistView.$song.val(name);
         playlistView.$addSongForm.submit();
-        expect(playlistView.$currentPlaylist.first().html()).toContain(name);
+        expect(playlistView.$currentPlaylist.first().html()).toContain(expected);
       });
       it('should create an li with a delete button', function(){
         playlistView.$song.val("something");
